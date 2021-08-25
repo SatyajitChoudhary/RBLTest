@@ -4,17 +4,17 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,Dimensions
+  Image,
+  Dimensions,
 } from 'react-native';
 import React from 'react';
 import {ReminderTasks} from '../utils/ReminderTasks';
 import {SlidingDot} from 'react-native-animated-pagination-dots';
 
-
 const Reminders = () => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   return (
-    <View style={{flex:1,justifyContent:'space-evenly'}}>
+    <View style={{flex: 1, justifyContent: 'space-evenly', marginBottom: 120}}>
       <Text
         style={{
           marginTop: 5,
@@ -25,7 +25,7 @@ const Reminders = () => {
         Payments & Reminders
       </Text>
       <ScrollView
-        style={{flexDirection: 'row',marginHorizontal:5}}
+        style={{flexDirection: 'row', marginHorizontal: 5}}
         onScroll={Animated.event(
           [{nativeEvent: {contentOffset: {x: scrollX}}}],
           {
@@ -54,11 +54,11 @@ const Reminders = () => {
           borderRadius: 5,
         }}
         containerStyle={{
-          position:'relative',
+          position: 'relative',
           bottom: 0,
-          flex:1,
-          marginVertical:15,
-          alignItems:'center'
+          flex: 1,
+          marginVertical: 15,
+          alignItems: 'center',
         }}
       />
     </View>
@@ -67,34 +67,34 @@ const Reminders = () => {
 
 const ReminderCards = ({reminder}) => {
   const {icons, title, price, payableCrossed, payableTime} = reminder;
-  const { width } = Dimensions.get('screen');
+  const {width} = Dimensions.get('screen');
   return (
     <View
       style={{
         flexDirection: 'row',
         height: 120,
-        width: width*0.96,
+        width: width * 0.96,
         color: 'white',
         alignContent: 'stretch',
         padding: 5,
         borderWidth: 1,
         marginHorizontal: 3,
-        borderRadius:15,
-        borderColor:'#3f3f3f'
+        borderRadius: 15,
+        borderColor: '#3f3f3f',
       }}>
       <Image
-        style={{width: "25%", height: 50, padding: 25, alignSelf: 'center'}}
+        style={{width: '25%', height: 50, padding: 25, alignSelf: 'center'}}
         source={icons}
       />
       <View
         style={{
           flexDirection: 'column',
           height: '90%',
-          width: "70%",
+          width: '70%',
           color: 'white',
           justifyContent: 'center',
           alignContent: 'center',
-          paddingLeft: 20
+          paddingLeft: 20,
         }}>
         <Text style={{textAlign: 'right', fontSize: 11, color: 'blue'}}>
           Remove

@@ -6,15 +6,15 @@ import QuickActions from './QuickActions';
 import Reminders from './Reminders';
 
 function HomeScreen() {
-  const { width,height } = Dimensions.get('screen');
-  
+  const {width, height} = Dimensions.get('screen');
+
   return (
-    <View style={{backgroundColor: 'white', position: 'relative',height,width}}>
-      <View>
-        {/* <Header /> */}
-        <Menu />
-      </View>
+    <View
+      style={{backgroundColor: 'white', position: 'relative', height, width}}>
       <ScrollView>
+        <View>
+          <Menu />
+        </View>
         <LoginButton />
         <QuickActions />
         <Reminders />

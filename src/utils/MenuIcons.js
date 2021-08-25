@@ -55,4 +55,12 @@ export var MenuIcons = [
     icons: 'plus-circle-outline',
     title: 'Category',
   },
+  {
+    icons: '',
+    title: '',
+  },
+  {
+    icons: '',
+    title: '',
+  },
 ];
