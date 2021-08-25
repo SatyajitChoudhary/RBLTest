@@ -1,21 +1,26 @@
-import React,{useState} from 'react'
-import { View,Text } from 'react-native'
-import LoginButton from './LoginButton'
-import Menu from './Menus'
-import QuickActions from './QuickActions'
-import Reminders from './Reminders'
+import React, {useState} from 'react';
+import {View, ScrollView, Dimensions} from 'react-native';
+import LoginButton from './LoginButton';
+import Menu from './Menus';
+import QuickActions from './QuickActions';
+import Reminders from './Reminders';
 
 function HomeScreen() {
-    const [expanded, setExpanded] = useState(false)
-    return (
-        <View style={{backgroundColor:"white",position:'relative'}}>
-            {/* <Header /> */}
-            <Menu />
-            <LoginButton />
-            <QuickActions />
-            <Reminders />
-        </View>
-    )
+  const { width,height } = Dimensions.get('screen');
+  
+  return (
+    <View style={{backgroundColor: 'white', position: 'relative',height,width}}>
+      <View>
+        {/* <Header /> */}
+        <Menu />
+      </View>
+      <ScrollView>
+        <LoginButton />
+        <QuickActions />
+        <Reminders />
+      </ScrollView>
+    </View>
+  );
 }
 
-export default HomeScreen
+export default HomeScreen;

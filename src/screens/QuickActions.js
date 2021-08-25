@@ -12,6 +12,7 @@ const QuickActions = () => {
         height: 130,
         width: '100%',
         justifyContent: 'center',
+        flex:1
       }}>
       {QuickActionsCards.map((elem, index) => {
         return (
@@ -43,7 +44,7 @@ function Action({icons, title, index}) {
         borderRadius: 10,
         transform: [{scale: midIndex ? 1.19 : 1}],
         zIndex: midIndex ? 3 : 1,
-        backgroundColor: 'white',      
+        backgroundColor: midIndex?'#ffffff' : '#efefef',      
       }}>
       <Image style={{width: 50, height: 50}} source={icons} />
       <Text>{title}</Text>

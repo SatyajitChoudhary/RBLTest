@@ -1,107 +1,117 @@
-import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React,{useState} from 'react'
-import { ReminderTasks } from '../utils/ReminderTasks'
+import {
+  Animated,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Image,Dimensions
+} from 'react-native';
+import React from 'react';
+import {ReminderTasks} from '../utils/ReminderTasks';
+import {SlidingDot} from 'react-native-animated-pagination-dots';
 
-
-// const ScrollledReminders = ()=>{
-//     const [dataSource, setDatasource] = useState(ReminderTasks)
-//     const [scrollX, setscrollX] = useState(new Animated.Value(0))
-//     return(
-//         <View style={{  justifyContent: 'center', alignItems: 'center' }}>
-//     <View
-//       style={{ width:"100%", height: 150 }}
-//       >
-//       <ScrollView
-//         horizontal={true}
-//         pagingEnabled={true}
-//         showsHorizontalScrollIndicator={false}
-//         onScroll={Animated.event(
-//           [{ nativeEvent: { contentOffset: { x: scrollX } } },{useNativeDriver: false}]
-//         )} 
-//         scrollEventThrottle={16}
-//         >
-//         {dataSource.map((source, i) => { 
-//           return ( 
-//             (<ReminderCards key={source.title} reminder={source}/>)
-//           );
-//         })}
-//       </ScrollView>
-//     </View>
-//     <View
-//       style={{ flexDirection: 'row' }}
-//       >
-//       {dataSource.map((_, i) => { 
-//         let opacity = Animated.interpolate({
-//           inputRange: [i - 1, i, i + 1],
-//           outputRange: [0.3, 1, 0.3],
-//           extrapolate: 'clamp' 
-//         });
-//         return (
-//           <Animated.View
-//             key={i}
-//             style={{ opacity, height: 5, width: 5, backgroundColor: '#595959', margin: 2, borderRadius: 5 }}
-//           />
-//         );
-//       })}
-//     </View>
-//   </View>
-//     )
-// }
 
 const Reminders = () => {
-    return (
-        <View>
-            <Text style={{fontSize:20,padding:10,textAlign:'left',margin:5,justifyContent:'space-evenly'}}>Payments & Reminders</Text>
-            <ScrollView style={{flexDirection:'row'}} scrollEnabled horizontal showsHorizontalScrollIndicator={false}>
-            {
-                ReminderTasks.map((reminder)=>{
-                    return(<ReminderCards key={reminder.title} reminder={reminder}/>)
-                })
-            }
-        </ScrollView>
-        </View>
-    )
-}
+  const scrollX = React.useRef(new Animated.Value(0)).current;
+  return (
+    <View style={{flex:1,justifyContent:'space-evenly'}}>
+      <Text
+        style={{
+          marginTop: 5,
+          fontSize: 20,
+          padding: 10,
+          textAlign: 'left',
+        }}>
+        Payments & Reminders
+      </Text>
+      <ScrollView
+        style={{flexDirection: 'row',marginHorizontal:5}}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {x: scrollX}}}],
+          {
+            useNativeDriver: false,
+          },
+        )}
+        pagingEnabled
+        horizontal
+        decelerationRate={'normal'}
+        scrollEventThrottle={16}
+        showsHorizontalScrollIndicator={false}>
+        {ReminderTasks.map(reminder => {
+          return <ReminderCards key={reminder.title} reminder={reminder} />;
+        })}
+      </ScrollView>
+      <SlidingDot
+        data={ReminderTasks}
+        expandingDotWidth={40}
+        activeDotColor={'black'}
+        scrollX={scrollX}
+        inActiveDotOpacity={0.6}
+        dotStyle={{
+          width: 10,
+          height: 10,
+          backgroundColor: '#3a3a3a',
+          borderRadius: 5,
+        }}
+        containerStyle={{
+          position:'relative',
+          bottom: 0,
+          flex:1,
+          marginVertical:15,
+          alignItems:'center'
+        }}
+      />
+    </View>
+  );
+};
 
-const ReminderCards = React.memo(({reminder}) => {
-    const {icons,
-    title,
-    price,
-    payableCrossed,
-    payableTime} = reminder
-    return (
+const ReminderCards = ({reminder}) => {
+  const {icons, title, price, payableCrossed, payableTime} = reminder;
+  const { width } = Dimensions.get('screen');
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        height: 120,
+        width: width*0.96,
+        color: 'white',
+        alignContent: 'stretch',
+        padding: 5,
+        borderWidth: 1,
+        marginHorizontal: 3,
+        borderRadius:15,
+        borderColor:'#3f3f3f'
+      }}>
+      <Image
+        style={{width: "25%", height: 50, padding: 25, alignSelf: 'center'}}
+        source={icons}
+      />
       <View
         style={{
-          flexDirection: 'row',
-          height: 120,
-          width: 200,
-          color: 'white',
-          alignContent: 'stretch',
-          padding: 2,
-          borderWidth:1,
-          marginHorizontal:10,
-          marginVertical:1
-        }}>
-        <Text style={{textAlign: 'center', color: 'white',padding:2}}>Icon</Text>
-        <View style={{
           flexDirection: 'column',
-          height: "100%",
-          width: 140,
+          height: '90%',
+          width: "70%",
           color: 'white',
           justifyContent: 'center',
-          alignContent: 'stretch',
-          padding: 2,
+          alignContent: 'center',
+          paddingLeft: 20
         }}>
-            <Text style={{textAlign:'right',fontSize:11,color:'blue'}}>Remove</Text>
-            <Text style={{ fontSize:15}}>{title}</Text>
-            <Text style={{ color: 'blue',fontSize:17}}>Rs. {price}</Text>
-            <Text style={{ color: 'blue',fontSize:11}}>Pay Now</Text>
-            <Text style={{ fontSize:11}}>{payableCrossed?`Payable after ${payableTime} days`:`Pay within ${payableTime} days`}</Text>
-        </View>
+        <Text style={{textAlign: 'right', fontSize: 11, color: 'blue'}}>
+          Remove
+        </Text>
+        <Text style={{fontSize: 15}}>{title}</Text>
+        <Text style={{color: 'blue', fontSize: 17}}>Rs. {price}</Text>
+        <Text style={{color: 'blue', fontSize: 11}}>Pay Now</Text>
+        <Text style={{fontSize: 11}}>
+          {payableCrossed
+            ? `Payable after ${payableTime} days`
+            : `Pay within ${payableTime} days`}
+        </Text>
       </View>
-    );
-  });
+    </View>
+  );
+};
 
-export default Reminders
+export default Reminders;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
